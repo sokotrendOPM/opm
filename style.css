@@ -1,0 +1,74 @@
+.logo{
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #d7bd72;
+    padding: 6px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    display: block;
+}
+
+@media (max-width: 767.98px){
+    .logo{
+        width: 85px;
+        height: 85px;
+        padding: 5px;
+        border-width: 3px;
+    }
+}
+
+/* Slightly reduce hero right image size (top-right) */
+.d-done.d-lg-block img{
+    max-width: 420px; /* close to the original size */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 767.98px){
+    .d-done.d-lg-block img{
+        max-width: 320px; /* close to the original mobile size */
+    }
+}
+
+/* Images inside the 3 "See how it works" cards */
+.how-work-image{
+    width: 100%;
+    max-width: 240px;
+    height: 150px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 767.98px){
+    .how-work-image{
+        height: 120px;
+        max-width: 200px;
+    }
+}
+
+/* Make text easier to read (bigger typography) */
+.nav-link{
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.display-5{
+    font-size: clamp(2.0rem, 3.2vw, 3.1rem) !important;
+    line-height: 1.15;
+}
+
+.lead{
+    font-size: 1.15rem !important;
+    line-height: 1.55;
+}
+
+/* Ensure the "See how it works" heading is readable on all devices */
+h1.text-uppercase{
+    font-size: 2rem;
+}
