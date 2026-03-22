@@ -6,12 +6,20 @@ $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $role = $_POST['role'];
 
-$sql = "INSERT INTO users (name,email,password,role)
-VALUES ('$name','$email','$password','$role')";
+// Prevent admin registration
+if($role == 'admin'){
+    die("Admin cannot register here!");
+}
 
-if ($conn->query($sql)) {
-    echo "Registered successfully! <a href='login.php'>Login</a>";
+$sql = "INSERT INTO users (name,email,password,role)
+VALUES (?,?,?,?)";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ssss", $name,$email,$password,$role);
+
+if($stmt->execute()){
+    echo "Registered successfully. <a href='../index.php'>Login</a>";
 } else {
-    echo "Error: " . $conn->error;
+    echo "Error: ".$conn->error;
 }
 ?>

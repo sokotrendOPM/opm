@@ -228,33 +228,47 @@
 
   <!-- LOGIN / REGISTER MODAL (LEFT STYLE) -->
 <div class="modal fade" id="authModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
 
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Login / Register</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="border rounded p-4 shadow-sm">
+
+        <h4 class="text-center mb-3">SokoTrend Login</h4>
+
+        <form action="auth/process_login.php" method="POST">
+          <input class="form-control mb-3" name="email" placeholder="Enter Email" required>
+          <input class="form-control mb-3" type="password" name="password" placeholder="Password" required>
+
+          <select class="form-control mb-3" name="role" required>
+            <option value="">Login as</option>
+            <option value="admin">Admin</option>
+            <option value="seller">Seller</option>
+            <option value="customer">Customer</option>
+          </select>
+
+          <button class="btn btn-primary w-100 mb-2">Login</button>
+        </form>
+
+        <hr>
+
+        <form action="auth/process_register.php" method="POST">
+          <input class="form-control mb-2" name="name" placeholder="Full Name">
+          <input class="form-control mb-2" name="email">
+          <input class="form-control mb-2" type="password" name="password">
+
+          <select class="form-control mb-2" name="role">
+            <option value="seller">Seller</option>
+            <option value="customer">Customer</option>
+          </select>
+
+          <button class="btn btn-success w-100">Register</button>
+        </form>
+
       </div>
 
-      <div class="modal-body row">
-
-        <!-- LOGIN -->
-        <div class="col-md-6">
-          <h5>Login</h5>
-          <form action="auth/process_login.php" method="POST">
-            <input class="form-control mb-2" name="email" placeholder="Email" required>
-            <input class="form-control mb-2" type="password" name="password" placeholder="Password" required>
-
-            <select class="form-control mb-2" name="role" required>
-              <option value="">Login as</option>
-              <option value="admin">Admin</option>
-              <option value="seller">Seller</option>
-              <option value="customer">Customer</option>
-            </select>
-
-            <button class="btn btn-primary w-100">Login</button>
-          </form>
-        </div>
+    </div>
+  </div>
+</div>
 
         <!-- REGISTER -->
         <div class="col-md-6">
@@ -291,25 +305,20 @@ function goTo(role) {
     .then(res => res.json())
     .then(data => {
 
-        // NOT LOGGED IN → SHOW MODAL
         if(!data.logged_in){
-            var modal = new bootstrap.Modal(document.getElementById('authModal'));
-            modal.show();
+            new bootstrap.Modal(document.getElementById('authModal')).show();
             return;
         }
 
-        // ROLE CHECK
-        if(role === 'seller' && data.role === 'seller'){
-            window.location = 'seller/dashboard.php';
-        }
-        else if(role === 'admin' && data.role === 'admin'){
+        // FORCE CORRECT REDIRECTION
+        if(data.role === 'admin'){
             window.location = 'admin/dashboard.php';
         }
-        else if(role === 'customer' && data.role === 'customer'){
-            window.location = 'customer/dashboard.php';
+        else if(data.role === 'seller'){
+            window.location = 'seller/dashboard.php';
         }
-        else {
-            alert("Access denied! You are logged in as " + data.role);
+        else if(data.role === 'customer'){
+            window.location = 'customer/dashboard.php';
         }
     });
 }

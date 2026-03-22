@@ -1,3 +1,20 @@
+
+<?php
+session_start();
+
+if(isset($_SESSION['role'])){
+    if($_SESSION['role'] == 'admin'){
+        header("Location: ../admin/dashboard.php");
+    } elseif($_SESSION['role'] == 'seller'){
+        header("Location: ../seller/dashboard.php");
+    } else {
+        header("Location: ../customer/dashboard.php");
+    }
+    exit();
+}
+?>
+
+
 <form action="process_login.php" method="POST">
     <h2>Login</h2>
 
